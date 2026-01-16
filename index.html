@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sujal Hazra — Lead Manager. Systems, structure & execution. Turning lead chaos into predictable growth through disciplined systems." />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>Sujal Hazra — Lead Manager</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    :root{
+      --bg0:#0b0f14;
+      --bg1:#0f1620;
+      --card:#0f1722cc;
+      --stroke:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.90);
+      --muted:rgba(255,255,255,.68);
+      --muted2:rgba(255,255,255,.50);
+      --accent:#7aa6d8;
+      --warm:#b7a48c;
+      --shadow: 0 18px 40px rgba(0,0,0,.45);
+      --shadow2: 0 10px 22px rgba(0,0,0,.40);
+      --radius: 22px;
+    }
+
+    html{scroll-behavior:smooth;}
+    body{
+      background: radial-gradient(1200px 650px at 18% 10%, rgba(122,166,216,.12), transparent 55%),
+                  radial-gradient(900px 540px at 75% 18%, rgba(183,164,140,.10), transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+      overflow-x:hidden;
+    }
+
+    /* Respect user motion preference */
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      .reveal, .depth-react, .floaty, .bg-grid{transition:none !important; animation:none !important;}
+    }
+
+    /* Subtle grid / geometry background */
+    .bg-grid{
+      position:absolute;
+      inset:-20vh -10vw;
+      pointer-events:none;
+      opacity:.55;
+      transform: translateZ(0);
+      filter: contrast(1.08);
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(closest-side at 30% 20%, rgba(0,0,0,.9), rgba(0,0,0,.15) 55%, rgba(0,0,0,0));
+    }
+    .grid-sheen{
+      position:absolute;
+      inset:-30vh -15vw;
+      pointer-events:none;
+      background: radial-gradient(700px 380px at var(--mx, 40%) var(--my, 20%), rgba(122,166,216,.12), transparent 62%);
+      opacity:.9;
+      transform: translateZ(0);
+      transition: opacity 500ms ease;
+      mask-image: radial-gradient(closest-side at 50% 25%, rgba(0,0,0,.9), rgba(0,0,0,.25) 60%, rgba(0,0,0,0));
+    }
+
+    /* Premium glass card */
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+    }
+
+    /* Reveal animation (scroll-driven via JS intersection observer) */
+    .reveal{
+      opacity:0;
+      transform: translate3d(0, 14px, 0);
+      transition: opacity 700ms cubic-bezier(.2,.8,.2,1), transform 900ms cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-in{
+      opacity:1;
+      transform: translate3d(0,0,0);
+    }
+
+    /* Depth enter (slight Z movement) */
+    .revealZ{
+      opacity:0;
+      transform: translate3d(0, 18px, -40px);
+      transition: opacity 800ms cubic-bezier(.2,.8,.2,1), transform 1000ms cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform;
+    }
+    .revealZ.is-in{opacity:1; transform: translate3d(0,0,0);}
+
+    /* Portrait + micro parallax */
+    .portrait-wrap{
+      perspective: 900px;
+      transform-style: preserve-3d;
+    }
+    .depth-react{
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 500ms cubic-bezier(.2,.8,.2,1);
+    }
+    .portrait{
+      position: relative;
+      border-radius: 28px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    .portrait .img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: translateZ(22px) scale(1.02);
+    }
+    .portrait .highlight{
+      position:absolute;
+      inset:-40% -35%;
+      background: radial-gradient(500px 260px at var(--hx, 30%) var(--hy, 25%), rgba(255,255,255,.20), transparent 62%);
+      mix-blend-mode: overlay;
+      opacity:.55;
+      transform: translateZ(40px);
+      pointer-events:none;
+      transition: opacity 600ms ease;
+    }
+    .portrait:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.22));
+      pointer-events:none;
+    }
+
+    /* Pipeline track */
+    .pipe{
+      position: relative;
+    }
+    .pipe:before{
+      content:"";
+      position:absolute;
+      left: 14px;
+      top: 6px;
+      bottom: 6px;
+      width:2px;
+      background: linear-gradient(180deg, rgba(122,166,216,.40), rgba(255,255,255,.08));
+      opacity:.8;
+      border-radius:999px;
+    }
+    .pipe-progress{
+      position:absolute;
+      left: 14px;
+      top: 6px;
+      width:2px;
+      height: var(--p, 0%);
+      background: linear-gradient(180deg, rgba(122,166,216,.85), rgba(122,166,216,.10));
+      border-radius:999px;
+      filter: drop-shadow(0 6px 10px rgba(122,166,216,.20));
+      transition: height 200ms linear;
+    }
+
+    /* Timeline */
+    .timeline{
+      position:relative;
+    }
+    .timeline:before{
+      content:"";
+      position:absolute;
+      left: 18px;
+      top: 0;
+      bottom: 0;
+      width:2px;
+      background: rgba(255,255,255,.10);
+      border-radius:999px;
+    }
+    .timeline-progress{
+      position:absolute;
+      left: 18px;
+      top: 0;
+      width:2px;
+      height: var(--t, 0%);
+      background: linear-gradient(180deg, rgba(183,164,140,.90), rgba(255,255,255,.08));
+      border-radius:999px;
+      transition: height 200ms linear;
+    }
+
+    /* Focus rings */
+    .focus-ring:focus-visible{
+      outline: 2px solid rgba(122,166,216,.55);
+      outline-offset: 3px;
+    }
+
+    /* Subtle noise overlay for editorial feel */
+    .noise:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="180" height="180" filter="url(%23n)" opacity="0.35"/></svg>');
+      opacity:.05;
+      mix-blend-mode: overlay;
+      z-index: 1;
+    }
+
+    /* Better selection */
+    ::selection{background: rgba(122,166,216,.25);}
+  </style>
+</head>
+<body class="noise">
+  <a href="#main" class="sr-only focus:not-sr-only focus-ring fixed top-3 left-3 z-50 glass px-3 py-2 text-sm">Skip to content</a>
+
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/10 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-baseline gap-3">
+        <span class="text-sm tracking-wide text-white/80">Sujal Hazra</span>
+        <span class="text-xs text-white/45">Lead Manager</span>
+      </div>
+      <nav class="hidden sm:flex items-center gap-6 text-sm text-white/65">
+        <a class="hover:text-white/90 transition focus-ring" href="#approach">Approach</a>
+        <a class="hover:text-white/90 transition focus-ring" href="#story">Story</a>
+        <a class="hover:text-white/90 transition focus-ring" href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="focus-ring glass px-3 py-2 text-sm text-white/85 hover:text-white transition">Work with Sujal</a>
+    </div>
+  </header>
+
+  <main id="main" class="relative z-10">
+    <!-- SECTION 1: INTRO -->
+    <section id="top" class="relative overflow-hidden">
+      <div class="bg-grid" aria-hidden="true"></div>
+      <div class="grid-sheen" aria-hidden="true"></div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-14 sm:pt-18 pb-16 sm:pb-22">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div class="lg:col-span-5 order-2 lg:order-1">
+            <div class="reveal">
+              <p class="text-xs tracking-[0.22em] uppercase text-white/55">Lead management</p>
+              <h1 class="mt-3 text-4xl sm:text-5xl lg:text-[56px] leading-[1.03] font-semibold tracking-tight">
+                Sujal Hazra
+              </h1>
+              <p class="mt-3 text-lg sm:text-xl text-white/75">
+                Lead Manager — <span class="text-white/88">Systems, Structure &amp; Execution</span>
+              </p>
+            </div>
+
+            <div class="reveal mt-8">
+              <p class="text-base sm:text-lg text-white/70 leading-relaxed max-w-xl">
+                Turning lead chaos into predictable growth through disciplined systems.
+              </p>
+              <div class="mt-8 glass p-5 sm:p-6">
+                <p class="text-sm sm:text-[15px] text-white/70 leading-relaxed">
+                  <span class="text-white/85">Lead management is not support.</span> It is the system that controls growth —
+                  defined ownership, measurable follow-ups, and execution that holds under pressure.
+                </p>
+              </div>
+            </div>
+
+            <div class="reveal mt-10 flex flex-wrap items-center gap-3">
+              <a href="#approach" class="focus-ring inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/14 border border-white/10 px-5 py-3 text-sm text-white/85 transition">
+                View work approach
+                <span class="text-white/60" aria-hidden="true">↓</span>
+              </a>
+              <a href="#contact" class="focus-ring inline-flex items-center gap-2 rounded-full border border-white/12 px-5 py-3 text-sm text-white/75 hover:text-white/90 hover:border-white/18 transition">
+                Get in touch
+              </a>
+            </div>
+
+            <div class="reveal mt-10 grid grid-cols-3 gap-3 sm:gap-4 max-w-xl">
+              <div class="glass p-4">
+                <div class="text-xs text-white/55 tracking-wide">Priority</div>
+                <div class="mt-1 text-sm text-white/85">Clarity</div>
+              </div>
+              <div class="glass p-4">
+                <div class="text-xs text-white/55 tracking-wide">Method</div>
+                <div class="mt-1 text-sm text-white/85">System-first</div>
+              </div>
+              <div class="glass p-4">
+                <div class="text-xs text-white/55 tracking-wide">Result</div>
+                <div class="mt-1 text-sm text-white/85">Predictability</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 order-1 lg:order-2">
+            <div class="portrait-wrap">
+              <div id="heroDepth" class="depth-react">
+                <figure class="portrait aspect-[4/5] sm:aspect-[16/17] max-w-[520px] ml-0 lg:ml-auto">
+                  <img class="img" alt="Portrait of Sujal Hazra" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='1050'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='%23101823'/><stop offset='1' stop-color='%230b0f14'/></linearGradient></defs><rect width='900' height='1050' fill='url(%23g)'/><g opacity='0.9'><circle cx='610' cy='340' r='240' fill='%23142133'/><circle cx='310' cy='710' r='320' fill='%23101823'/></g><g opacity='0.75' fill='none' stroke='%23ffffff'><path d='M120 200 C 260 110, 430 120, 560 210' stroke-opacity='0.10' stroke-width='2'/><path d='M180 850 C 350 760, 540 780, 720 870' stroke-opacity='0.08' stroke-width='2'/></g><text x='70' y='930' fill='rgba(255,255,255,0.32)' font-family='ui-sans-serif, system-ui' font-size='22' letter-spacing='2'>Add portrait photo</text><text x='70' y='965' fill='rgba(255,255,255,0.22)' font-family='ui-sans-serif, system-ui' font-size='14'>Replace the image source with Sujal’s real photo.</text></svg>" />
+                  <div class="highlight" aria-hidden="true"></div>
+                </figure>
+              </div>
+            </div>
+            <p class="mt-4 text-xs text-white/45 max-w-[520px] lg:ml-auto">Tip: Replace the placeholder with a real portrait (kept intentionally minimal for a human-crafted feel).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PHILOSOPHY / APPROACH -->
+    <section id="approach" class="relative">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-18 sm:py-22">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+          <div class="lg:col-span-4">
+            <div class="reveal">
+              <p class="text-xs tracking-[0.22em] uppercase text-white/55">Philosophy</p>
+              <h2 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight">Structure over chaos.</h2>
+              <p class="mt-4 text-sm sm:text-base text-white/70 leading-relaxed">
+                A pipeline is a system: stages are defined, ownership is explicit, and the feedback loop is measurable.
+                The goal is not “more activity.” The goal is controlled throughput.
+              </p>
+            </div>
+
+            <div class="reveal mt-8 glass p-5 sm:p-6">
+              <p class="text-sm text-white/70 leading-relaxed">
+                <span class="text-white/85">Core metric mindset:</span> response time, follow-up cadence, stage conversion, and drop-off reasons.
+                If it can’t be measured, it can’t be managed.
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-8">
+            <div class="glass p-5 sm:p-7">
+              <div class="flex items-center justify-between gap-4">
+                <h3 class="text-sm tracking-wide text-white/75">Scroll-driven pipeline</h3>
+                <div class="text-xs text-white/45">Progress</div>
+              </div>
+
+              <div class="mt-6 pipe" id="pipe">
+                <div class="pipe-progress" id="pipeProgress" aria-hidden="true"></div>
+
+                <div class="pl-10 space-y-6">
+                  <article class="revealZ stage" data-stage>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/25 border border-white/20"></div>
+                      <div>
+                        <h4 class="text-lg font-semibold text-white/88">Systems Over Improvisation</h4>
+                        <p class="mt-1 text-sm text-white/70 leading-relaxed">
+                          Structured pipelines, defined ownership, measurable follow-ups.
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="revealZ stage" data-stage>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/25 border border-white/20"></div>
+                      <div>
+                        <h4 class="text-lg font-semibold text-white/88">Execution Over Assumptions</h4>
+                        <p class="mt-1 text-sm text-white/70 leading-relaxed">
+                          Decisions backed by response times, conversion ratios, and drop-offs — not guesswork.
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="revealZ stage" data-stage>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/25 border border-white/20"></div>
+                      <div>
+                        <h4 class="text-lg font-semibold text-white/88">Consistency at Scale</h4>
+                        <p class="mt-1 text-sm text-white/70 leading-relaxed">
+                          Repeatable workflows that perform under pressure — even when volume spikes.
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+              <div class="mt-8 grid sm:grid-cols-3 gap-3 sm:gap-4">
+                <div class="glass p-4">
+                  <div class="text-xs text-white/55">Ownership</div>
+                  <div class="mt-1 text-sm text-white/85">Explicit handoffs</div>
+                </div>
+                <div class="glass p-4">
+                  <div class="text-xs text-white/55">Follow-up</div>
+                  <div class="mt-1 text-sm text-white/85">Defined cadence</div>
+                </div>
+                <div class="glass p-4">
+                  <div class="text-xs text-white/55">Feedback loop</div>
+                  <div class="mt-1 text-sm text-white/85">Drop-off reasons</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: STORY / EXPERIENCE -->
+    <section id="story" class="relative">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-18 sm:py-22">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div class="lg:col-span-5">
+            <div class="reveal">
+              <p class="text-xs tracking-[0.22em] uppercase text-white/55">Story</p>
+              <h2 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight">Built through execution, not theory.</h2>
+              <p class="mt-4 text-sm sm:text-base text-white/70 leading-relaxed">
+                A documentary timeline — quiet, direct, and accountable.
+              </p>
+            </div>
+
+            <div class="reveal mt-8 glass p-5 sm:p-6">
+              <p class="text-sm text-white/70 leading-relaxed">
+                The pattern was consistent: good leads were being lost to unclear ownership, delayed follow-ups, and inconsistent workflows.
+                The solution wasn’t motivation — it was structure.
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="glass p-5 sm:p-7 relative overflow-hidden">
+              <div class="flex items-center justify-between gap-4">
+                <h3 class="text-sm tracking-wide text-white/75">Timeline</h3>
+                <div class="text-xs text-white/45">Scroll to progress</div>
+              </div>
+
+              <div class="mt-6 timeline" id="timeline">
+                <div class="timeline-progress" id="timelineProgress" aria-hidden="true"></div>
+
+                <div class="pl-12 space-y-6">
+                  <div class="revealZ t-item" data-titem>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/18 border border-white/18"></div>
+                      <div>
+                        <div class="text-xs text-white/55 tracking-wide">Education</div>
+                        <p class="mt-1 text-sm sm:text-base text-white/80 leading-relaxed">
+                          Mechanical Engineering at <span class="text-white/90">GEC Palanpur</span>.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="revealZ t-item" data-titem>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/18 border border-white/18"></div>
+                      <div>
+                        <div class="text-xs text-white/55 tracking-wide">Early exposure</div>
+                        <p class="mt-1 text-sm sm:text-base text-white/80 leading-relaxed">
+                          Worked with founders during college — close to real constraints, real timelines.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="revealZ t-item" data-titem>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/18 border border-white/18"></div>
+                      <div>
+                        <div class="text-xs text-white/55 tracking-wide">Observation</div>
+                        <p class="mt-1 text-sm sm:text-base text-white/80 leading-relaxed">
+                          Saw lead loss happening quietly — not from weak demand, but from weak systems.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="revealZ t-item" data-titem>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/18 border border-white/18"></div>
+                      <div>
+                        <div class="text-xs text-white/55 tracking-wide">Initiative</div>
+                        <p class="mt-1 text-sm sm:text-base text-white/80 leading-relaxed">
+                          Started organizing follow-ups, clarifying handoffs, and setting operating rules.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="revealZ t-item" data-titem>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-1 h-3 w-3 rounded-full bg-white/18 border border-white/18"></div>
+                      <div>
+                        <div class="text-xs text-white/55 tracking-wide">Specialization</div>
+                        <p class="mt-1 text-sm sm:text-base text-white/80 leading-relaxed">
+                          Defined his lane through repeatable execution — building systems that keep growth accountable.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 border-t border-white/8 pt-6" id="contact">
+                <div class="reveal">
+                  <h3 class="text-lg font-semibold text-white/88">Contact</h3>
+                  <p class="mt-2 text-sm text-white/70 leading-relaxed">
+                    If you need lead operations that run cleanly — with defined ownership and measurable execution — reach out.
+                  </p>
+                  <div class="mt-5 flex flex-wrap items-center gap-3">
+                    <button id="copyEmail" class="focus-ring inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/14 border border-white/10 px-5 py-3 text-sm text-white/85 transition">
+                      Copy email
+                      <span class="text-white/55" id="copyHint" aria-hidden="true">sujal@example.com</span>
+                    </button>
+                    <a class="focus-ring inline-flex items-center gap-2 rounded-full border border-white/12 px-5 py-3 text-sm text-white/75 hover:text-white/90 hover:border-white/18 transition" href="#top">
+                      Back to top
+                    </a>
+                  </div>
+                  <p class="mt-3 text-xs text-white/45">Replace the email placeholder in the code with Sujal’s real contact.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="border-t border-white/6">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <p class="text-xs text-white/45">© <span id="year"></span> Sujal Hazra. Built for clarity, not noise.</p>
+        <p class="text-xs text-white/45">Designed with restrained motion, responsive layout, and semantic structure.</p>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Lightweight motion: mouse-driven micro parallax + scroll-driven progress
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const year = document.getElementById('year');
+      if(year) year.textContent = new Date().getFullYear();
+
+      // Intersection-based reveals
+      const reveals = document.querySelectorAll('.reveal, .revealZ');
+      const io = new IntersectionObserver((entries)=>{
+        for(const e of entries){
+          if(e.isIntersecting){
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        }
+      }, {threshold: 0.18, rootMargin: '0px 0px -8% 0px'});
+      reveals.forEach(el=>io.observe(el));
+
+      // Micro-parallax (cursor) on hero portrait + grid sheen position
+      const heroDepth = document.getElementById('heroDepth');
+      const sheen = document.querySelector('.grid-sheen');
+      const highlight = document.querySelector('.portrait .highlight');
+
+      let mx = 0, my = 0, tx = 0, ty = 0;
+      function raf(){
+        tx += (mx - tx) * 0.08;
+        ty += (my - ty) * 0.08;
+        if(heroDepth && !prefersReduced){
+          const rx = (-ty * 7).toFixed(3);
+          const ry = (tx * 9).toFixed(3);
+          heroDepth.style.transform = `translate3d(${(tx*10).toFixed(2)}px, ${(ty*10).toFixed(2)}px, 0) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        }
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      function onMove(e){
+        const w = window.innerWidth || 1;
+        const h = window.innerHeight || 1;
+        const x = (e.clientX / w) * 2 - 1;
+        const y = (e.clientY / h) * 2 - 1;
+        mx = x;
+        my = y;
+        if(sheen){
+          sheen.style.setProperty('--mx', `${Math.round((e.clientX / w)*100)}%`);
+          sheen.style.setProperty('--my', `${Math.round((e.clientY / h)*100)}%`);
+        }
+        if(highlight){
+          highlight.style.setProperty('--hx', `${Math.round((e.clientX / w)*100)}%`);
+          highlight.style.setProperty('--hy', `${Math.round((e.clientY / h)*100)}%`);
+        }
+      }
+      if(!prefersReduced){
+        window.addEventListener('mousemove', onMove, {passive:true});
+      }
+
+      // Scroll-based: portrait slight forward movement + pipeline/timeline progress
+      const pipe = document.getElementById('pipe');
+      const pipeProgress = document.getElementById('pipeProgress');
+      const timeline = document.getElementById('timeline');
+      const timelineProgress = document.getElementById('timelineProgress');
+
+      function clamp01(v){ return Math.max(0, Math.min(1, v)); }
+
+      function elementProgress(el){
+        if(!el) return 0;
+        const r = el.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const start = vh * 0.80;
+        const end = vh * 0.20;
+        const p = (start - r.top) / (start - end);
+        return clamp01(p);
+      }
+
+      function onScroll(){
+        if(!prefersReduced && heroDepth){
+          // Very subtle push forward as user scrolls the first viewport
+          const sc = window.scrollY || 0;
+          const push = Math.min(18, sc * 0.03);
+          heroDepth.style.transform += ` translate3d(0, 0, ${push.toFixed(2)}px)`;
+        }
+
+        const pp = elementProgress(pipe);
+        if(pipeProgress) pipeProgress.style.setProperty('--p', `${(pp*100).toFixed(1)}%`);
+
+        const tp = elementProgress(timeline);
+        if(timelineProgress) timelineProgress.style.setProperty('--t', `${(tp*100).toFixed(1)}%`);
+      }
+
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', onScroll, {passive:true});
+      onScroll();
+
+      // Copy email (placeholder)
+      const email = 'sujal@example.com';
+      const btn = document.getElementById('copyEmail');
+      const hint = document.getElementById('copyHint');
+      if(hint) hint.textContent = email;
+
+      async function copyText(t){
+        try{
+          await navigator.clipboard.writeText(t);
+          return true;
+        }catch(e){
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = t;
+          ta.setAttribute('readonly','');
+          ta.style.position='fixed';
+          ta.style.top='-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          return ok;
+        }
+      }
+
+      if(btn){
+        btn.addEventListener('click', async ()=>{
+          const ok = await copyText(email);
+          btn.classList.add('ring-1','ring-white/25');
+          const prev = hint ? hint.textContent : '';
+          if(hint) hint.textContent = ok ? 'Copied' : 'Copy failed';
+          setTimeout(()=>{
+            btn.classList.remove('ring-1','ring-white/25');
+            if(hint) hint.textContent = prev;
+          }, 1200);
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>
